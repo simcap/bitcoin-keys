@@ -5,7 +5,7 @@ module Bitcoin
     module Hasher
       module_function
 
-      def hash(bin)
+      def hash256(bin)
         Digest::SHA256.digest(
           Digest::SHA256.digest(bin)
         )

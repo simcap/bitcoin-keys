@@ -29,7 +29,7 @@ module Bitcoin
       digest = Hasher.hash160_as_hex(bytes)
       hex = version + digest
       raw = [hex].pack('H*')
-      sha = Hasher.hash(raw)
+      sha = Hasher.hash256(raw)
       (raw + sha[0,4]).unpack('H*').first
     end
 
