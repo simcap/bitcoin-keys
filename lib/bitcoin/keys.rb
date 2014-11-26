@@ -1,8 +1,8 @@
-#require "bitcoin/keys/version"
+require 'bitcoin/keys/version'
+require 'bitcoin/keys/hasher'
 require 'bitcoin/keys/base58'
 
 require 'openssl'
-require 'digest'
 
 module Bitcoin
   module Keys
@@ -26,11 +26,10 @@ module Bitcoin
 
     def self.pubkey_hash(pub_key_hex, version = '00')
       bytes = [pub_key_hex].pack('H*')
-      digest = Digest::RMD160.hexdigest(Digest::SHA256.digest(bytes))
+      digest = Hasher.hash160_as_hex(bytes)
       hex = version + digest
       raw = [hex].pack('H*')
-      sha = Digest::SHA256.digest(raw)
-      sha = Digest::SHA256.digest(sha)
+      sha = Hasher.hash(raw)
       (raw + sha[0,4]).unpack('H*').first
     end
 
