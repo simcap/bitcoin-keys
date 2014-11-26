@@ -21,26 +21,22 @@ module Bitcoin
 
     def self.convert_to_bitcoin_address(pubkey_hex)
       pubkeyhash = self.pubkey_hash(pubkey_hex)
-      #sha = Digest::SHA256.digest(extended_rmd)
-      #sha = Digest::SHA256.digest(sha)
-      #first_four_bytes_as_hex = sha.unpack('H8').first
-      #hex_result = pubkeyhash + first_four_bytes_as_hex 
-      #result = [hex_result].pack('H*')
       self.base_58_check([pubkeyhash].pack('H*'))
     end
 
     def self.pubkey_hash(pub_key_hex, version = '00')
       bytes = [pub_key_hex].pack('H*')
       digest = Digest::RMD160.hexdigest(Digest::SHA256.digest(bytes))
-      version + digest
+      hex = version + digest
+      raw = [hex].pack('H*')
+      sha = Digest::SHA256.digest(raw)
+      sha = Digest::SHA256.digest(sha)
+      (raw + sha[0,4]).unpack('H*').first
     end
 
     def self.base_58_check(raw)
-      sha = Digest::SHA256.digest(raw)
-      sha = Digest::SHA256.digest(sha)
-      concat = raw + sha[0,4]
-      leading_zeros = concat.bytes.take_while {|c| c == 0}.size
-      bignum = (concat.unpack('H*').first).to_i(16)
+      leading_zeros = raw.bytes.take_while {|c| c == 0}.size
+      bignum = (raw.unpack('H*').first).to_i(16)
       result = ""
       while bignum > 0
         bignum, remainder = bignum.divmod(58)
@@ -53,15 +49,6 @@ module Bitcoin
       result.reverse
     end
 
-
-    def self.bytes_to_integer(hex)
-      raw = [hex].pack('H*')
-      value = 0
-      raw.each_char.each_with_index do |b, i|
-        value = value + ((256 ** i) * b.ord)
-      end
-      value
-    end
   end
 end
 
