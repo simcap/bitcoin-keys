@@ -1,6 +1,8 @@
 require 'bitcoin/keys/version'
 require 'bitcoin/keys/hasher'
 require 'bitcoin/keys/base58'
+require 'bitcoin/keys/public_key'
+require 'bitcoin/keys/private_key'
 
 require 'openssl'
 
@@ -16,21 +18,11 @@ module Bitcoin
       priv_key_as_hex = ec.private_key.to_s(16)
       pub_key_as_hex = ec.public_key.to_bn.to_s(16)
 
-      [priv_key_as_hex, pub_key_as_hex]
+      [PrivateKey.new(priv_key_as_hex), PublicKey.new(pub_key_as_hex)]
     end
 
     def self.convert_to_bitcoin_address(pubkey_hex)
-      pubkeyhash = self.pubkey_hash(pubkey_hex)
-      Base58.encode58([pubkeyhash].pack('H*'))
-    end
-
-    def self.pubkey_hash(pub_key_hex, version = '00')
-      bytes = [pub_key_hex].pack('H*')
-      digest = Hasher.hash160_as_hex(bytes)
-      hex = version + digest
-      raw = [hex].pack('H*')
-      sha = Hasher.hash256(raw)
-      (raw + sha[0,4]).unpack('H*').first
+      PublicKey.new(pubkey_hex).address
     end
 
   end
@@ -38,5 +30,5 @@ end
 
 if __FILE__ == $0
   keys = Bitcoin::Keys.generate
-  puts keys
+  p keys
 end
