@@ -26,7 +26,7 @@ module Bitcoin
       privkey_bn = OpenSSL::BN.new(privkey_hex, 16)
       ec.private_key = privkey_bn 
       pubkey_point = ec.group.generator.mul(privkey_bn)
-      pubkey_hex = '0' + pubkey_point.to_bn.to_i.to_s(16)
+      pubkey_hex = "%0130x" % pubkey_point.to_bn.to_int
       
       [PrivateKey.new(privkey_hex), PublicKey.new(pubkey_hex)]
     end
