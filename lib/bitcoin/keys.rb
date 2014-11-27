@@ -15,10 +15,10 @@ module Bitcoin
       # Generate public/private keys in container
       ec.generate_key
       # Get keys as hex
-      priv_key_as_hex = ec.private_key.to_s(16)
-      pub_key_as_hex = ec.public_key.to_bn.to_s(16)
+      privkey_hex = ec.private_key.to_s(16)
+      pubkey_hex = ec.public_key.to_bn.to_s(16)
 
-      [PrivateKey.new(priv_key_as_hex), PublicKey.new(pub_key_as_hex)]
+      [PrivateKey.new(privkey_hex), PublicKey.new(pubkey_hex)]
     end
 
     def self.convert_to_bitcoin_address(pubkey_hex)

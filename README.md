@@ -1,10 +1,10 @@
 # Bitcoin::Keys
 
-Generate and manage Bitcoin keys
+Generate and manage Bitcoin keys. Using Ruby stlib only.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your Gemfile:
 
 ```ruby
 gem 'bitcoin-keys', require: 'bitcoin/keys'
@@ -12,7 +12,7 @@ gem 'bitcoin-keys', require: 'bitcoin/keys'
 
 ## Usage
 
-#### Generate keys
+#### Generate keys pair
 
 ```ruby
 privkey, pubkey = Bitcoin::Keys.generate    # Default to main network
@@ -20,6 +20,8 @@ privkey, pubkey = Bitcoin::Keys.generate    # Default to main network
 privkey.to_s    # => '18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725'
 pubkey.to_s     # => '16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM'
 ```
+
+#### Generate public key from private key
 
 #### Public key
 
