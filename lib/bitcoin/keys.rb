@@ -21,6 +21,16 @@ module Bitcoin
       [PrivateKey.new(privkey_hex), PublicKey.new(pubkey_hex)]
     end
 
+    def self.generate_from_private_key(privkey_hex)
+      ec = OpenSSL::PKey::EC.new('secp256k1') 
+      privkey_bn = OpenSSL::BN.new(privkey_hex, 16)
+      ec.private_key = privkey_bn 
+      pubkey_point = ec.group.generator.mul(privkey_bn)
+      pubkey_hex = '0' + pubkey_point.to_bn.to_i.to_s(16)
+      
+      [PrivateKey.new(privkey_hex), PublicKey.new(pubkey_hex)]
+    end
+
     def self.convert_to_bitcoin_address(pubkey_hex)
       PublicKey.new(pubkey_hex).address
     end

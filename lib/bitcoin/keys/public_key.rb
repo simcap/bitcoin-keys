@@ -2,10 +2,6 @@ module Bitcoin
   module Keys
     class PublicKey
 
-      def self.from_bn(bn_number)
-        
-      end
-
       def initialize(pubkey_hex)
         @pubkey_hex = pubkey_hex
       end
@@ -18,6 +14,10 @@ module Bitcoin
           sha = Hasher.hash256(raw)
           (raw + sha[0,4]).unpack('H*').first
         end
+      end
+
+      def to_hex
+        @pubkey_hex
       end
 
       def address

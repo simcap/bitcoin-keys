@@ -23,6 +23,14 @@ pubkey.to_s     # => '16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM'
 
 #### Generate public key from private key
 
+```ruby
+privkey_hex = '18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725'
+privkey, pubkey = Bitcoin::Keys.generate_from_private_key(privkey_hex)   # Default to main network
+
+privkey.to_hex    # => '18E14A7B6A307F426A94F8114701E7C8E774E7F9A47E2C2035DB29A206321725'
+pubkey.address    # => '16UwLL9Risc3QfPqBUvKofHmBQ7wMtjvM'
+```
+
 #### Public key
 
 From an hexadecimal representation
