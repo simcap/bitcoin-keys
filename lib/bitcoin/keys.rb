@@ -12,8 +12,8 @@ module Bitcoin
     def self.generate
       ec = OpenSSL::PKey::EC.new('secp256k1') 
       ec.generate_key
-      privkey_hex = ec.private_key.to_s(16)
-      pubkey_hex = ec.public_key.to_bn.to_s(16)
+      privkey_hex = "%032x" % ec.private_key.to_int
+      pubkey_hex = "%0130x" % ec.public_key.to_bn.to_int
 
       [PublicKey.new(pubkey_hex), PrivateKey.new(privkey_hex)]
     end
