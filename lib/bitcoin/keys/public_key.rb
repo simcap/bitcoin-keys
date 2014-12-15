@@ -20,19 +20,15 @@ module Bitcoin
       end
 
       def address
-        @pubkey_address ||= begin
-          Base58.encode58(binary_address(to_hex))
-        end
+        @address ||= Base58.encode58(binary_address(to_hex))
       end
 
       def compressed_address
-        @pubkey_compressed_address ||= begin
-          Base58.encode58(binary_address(compressed))
-        end
+        @compressed_address ||= Base58.encode58(binary_address(compressed))
       end
 
       def compressed
-        @pubkey_compressed ||= begin
+        @compressed_hex ||= begin
           x, y = coordinates 
           prefix = y.to_i(16).even? ? '02' : '03'
           prefix + x

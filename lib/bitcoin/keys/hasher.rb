@@ -11,6 +11,12 @@ module Bitcoin
         )
       end
 
+      def hash256_as_hex(bin)
+        Digest::SHA256.hexdigest(
+          Digest::SHA256.digest(bin)
+        )
+      end
+
       def hash160(bin)
         Digest::RMD160.digest(
           Digest::SHA256.digest(bin)

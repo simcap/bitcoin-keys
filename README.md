@@ -43,3 +43,14 @@ pubkey.compressed_address    # => '1PMycacnJaSqwwJqjawXBErnLsZ7RkXUAs'
 pubkey.to_hex                # => '0450863AD64A87AE8A2FE83C1AF1A8403CB53F53E486D8511DAD8A04887E5B23522CD4702...'
 pubkey.compressed            # => '0250863AD64A87AE8A2FE83C1AF1A8403CB53F53E486D8511DAD8A04887E5B2352'
 ```
+
+#### Private key
+
+From a hexadecimal representation
+```ruby
+privkey = Bitcoin::Keys::PublicKey.new(privkey_hex)
+
+privkey.to_s     # => '1E99423A4ED27608A15A2616A2B0E9E52CED330AC530EDCC32C8FFC6A526AEDD'
+privkey.to_hex   # => '1E99423A4ED27608A15A2616A2B0E9E52CED330AC530EDCC32C8FFC6A526AEDD'
+privkey.wif      # => '5J3mBbAH58CpQ3Y5RNJpUKPE62SQ5tfcvU2JpbnkeyhfsYB1Jcn'
+privkey.to_wif   # => '5J3mBbAH58CpQ3Y5RNJpUKPE62SQ5tfcvU2JpbnkeyhfsYB1Jcn'
