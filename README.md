@@ -48,13 +48,13 @@ pubkey.compressed            # => '0250863AD64A87AE8A2FE83C1AF1A8403CB53F53E486D
 
 From a hexadecimal representation
 ```ruby
-privkey = Bitcoin::Keys::PublicKey.new(privkey_hex)            # => For mainnet
+privkey = Bitcoin::Keys::PrivateKey.new(privkey_hex)            # => For mainnet
 
 privkey.to_s           # => '1E99423A4ED27608A15A2616A2B0E9E52CED330AC530EDCC32C8FFC6A526AEDD'
 privkey.to_hex         # => '1E99423A4ED27608A15A2616A2B0E9E52CED330AC530EDCC32C8FFC6A526AEDD'
 privkey.wif            # => '5J3mBbAH58CpQ3Y5RNJpUKPE62SQ5tfcvU2JpbnkeyhfsYB1Jcn'
 privkey.wif_compressed # => 'KxFC1jmwwCoACiCAWZ3eXa96mBM6tb3TYzGmf6YwgdGWZgawvrtJ'
 
-privkey = Bitcoin::Keys::PublicKey.new(privkey_hex, :testnet)   # => For testnet
+privkey = Bitcoin::Keys::PrivateKey.new(privkey_hex, :testnet)   # => For testnet
 ...
 ```
