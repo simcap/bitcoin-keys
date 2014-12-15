@@ -19,30 +19,28 @@ module Bitcoin
         @pubkey_hex = pubkey_hex
       end
 
-      def to_hash(version = '00')
-        @pubkey_hash ||= begin 
-          bytes = [@pubkey_hex].pack('H*')
-          digest = Hasher.hash160_as_hex(bytes)
-          raw = [version + digest].pack('H*')
-          sha = Hasher.hash256(raw)
-          (raw + sha[0,4]).unpack('H*').first
+      def address
+        @pubkey_address ||= begin
+          Base58.encode58(binary_address(to_hex))
+        end
+      end
+
+      def compressed_address
+        @pubkey_compressed_address ||= begin
+          Base58.encode58(binary_address(compressed))
+        end
+      end
+
+      def compressed
+        @pubkey_compressed ||= begin
+          x, y = coordinates 
+          prefix = y.to_i(16).even? ? '02' : '03'
+          prefix + x
         end
       end
 
       def to_hex
         @pubkey_hex
-      end
-
-      def compressed
-        x, y = coordinates 
-        prefix = y.to_i(16).even? ? '02' : '03'
-        prefix + x
-      end
-
-      def address
-        @pubkey_address ||= begin
-          Base58.encode58([self.to_hash].pack('H*'))
-        end
       end
 
       def to_s
@@ -68,6 +66,14 @@ module Bitcoin
 
       def coordinates
         @coordinates ||= [@pubkey_hex[2..65], @pubkey_hex[66..130]]
+      end
+
+      def binary_address(key_hex, version = "00")
+        bytes = [key_hex].pack('H*')
+        digest = Hasher.hash160_as_hex(bytes)
+        raw = [version + digest].pack('H*')
+        sha = Hasher.hash256(raw)
+        (raw + sha[0,4])
       end
 
     end

@@ -1,7 +1,7 @@
 module Bitcoin
   module Keys
     module Base58
-      BASE_58_ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".freeze
+      ALPHABET = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz".freeze
 
       module_function
 
@@ -10,13 +10,13 @@ module Bitcoin
         result = ""
         while bignum > 0
           bignum, remainder = bignum.divmod(58)
-          result << BASE_58_ALPHABET[remainder]
+          result << ALPHABET[remainder]
         end
-        result = result.each_char.drop_while {|e| e == BASE_58_ALPHABET[0]}.join
+        result = result.each_char.drop_while {|e| e == ALPHABET[0]}.join
 
         leading_zeros = bin.bytes.take_while {|c| c == 0}.size
         leading_zeros.times do
-          result << BASE_58_ALPHABET[0]
+          result << ALPHABET[0]
         end
         result.reverse
       end
