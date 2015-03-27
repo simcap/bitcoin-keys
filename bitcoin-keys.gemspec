@@ -7,7 +7,6 @@ Gem::Specification.new do |spec|
   spec.name          = "bitcoin-keys"
   spec.version       = Bitcoin::Keys::VERSION
   spec.authors       = ["simcap"]
-  spec.email         = ["simcap@fastmail.com"]
   spec.summary       = %q{Generate and manage Bitcoin keys}
   spec.description   = %q{Generate and manage Bitcoin keys}
   spec.homepage      = "https://github.com/simcap/bitcoin-keys"
